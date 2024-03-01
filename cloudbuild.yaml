@@ -1,4 +1,6 @@
 steps:
-  - name: gcr.io/cloud-builders/gsutil
-    args: ["-m", "rsync", "-r", "-c", "-d", "gs://talk-hub-415716.appspot.com"]
-timeout: "1600s"
+- name: 'bash'
+  args: ['echo', 'Hello world!']
+logsBucket: 'gs://talk-hub-415716.appspot.com'
+options:
+  logging: GCS_ONLY
