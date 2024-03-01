@@ -5,10 +5,4 @@ steps:
 - name: node:20.0.0
   entrypoint: npm
   args: ["run", "build"]
-- name: "gcr.io/cloud-builders/gcloud"
-  args:
-  - "app"
-  - "deploy"
-  - "-v"
-  - "20220628t175507"
   timeout: "1600s"
