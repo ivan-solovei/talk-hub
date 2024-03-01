@@ -6,5 +6,5 @@ steps:
   entrypoint: npm
   args: ["run", "build"]
 options:
-  logging: REGIONAL_USER_OWNED_BUCKET
-  timeout: "1600s"
+ logging: CLOUD_LOGGING_ONLY
+timeout: "1600s"
