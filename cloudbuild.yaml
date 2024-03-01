@@ -5,4 +5,6 @@ steps:
 - name: node:20.0.0
   entrypoint: npm
   args: ["run", "build"]
+options:
+  logging: CLOUD_LOGGING_ONLY
 timeout: "1600s"
