@@ -6,5 +6,4 @@ steps:
   entrypoint: npm
   args: ["run", "build"]
 options:
- logging: CLOUD_LOGGING_ONLY
 timeout: "1600s"
