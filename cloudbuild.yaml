@@ -12,5 +12,5 @@ steps:
   args: ['run', 'build']
 - name: 'gsutil'
   args: ['cp', '-r', 'dist', 'gs://my-bucket/']
-buildOptions:
-  default_logs_bucket_behavior: REGIONAL_USER_OWNED_BUCKET
+options:
+ logging: CLOUD_LOGGING_ONLY
