@@ -1,4 +1,4 @@
-triggers:
+steps:
 - github:
     secret: 1804
 steps:
