@@ -1,6 +1,14 @@
+triggers:
+- github:
+    secret: 1804
 steps:
-- name: 'bash'
-  args: ['echo', 'Hello world!']
-logsBucket: 'gs://talk-hub-415716.appspot.com'
-options:
-  logging: GCS_ONLY
+- name: 'gsutil'
+  args: ['cp', 'https://storage.googleapis.com', '.']
+- name: 'unzip'
+  args: ['https://storage.googleapis.com']
+- name: 'npm'
+  args: ['install']
+- name: 'npm'
+  args: ['run', 'build']
+- name: 'gsutil'
+  args: ['cp', '-r', 'dist', 'gs://my-bucket/']
