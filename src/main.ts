@@ -1,6 +1,8 @@
 import { NestFactory } from '@nestjs/core';
+import mongoose from 'mongoose';
+import { prop, getModelForClass } from '@typegoose/typegoose';
 import { AppModule } from './app.module';
-import { MongoClient, ServerApiVersion } from 'mongodb';
+import { ServerApiVersion } from 'mongodb';
 var ip = require('ip');
 
 async function bootstrap() {
@@ -12,33 +14,48 @@ async function bootstrap() {
 
   const uri = "mongodb+srv://solo:reqwow88@talk-hub-cluster.pw9tlim.mongodb.net/?retryWrites=true&w=majority&appName=talk-hub-cluster";
 
-  // Create a MongoClient with a MongoClientOptions object to set the Stable API version
-  const client = new MongoClient(uri, {
+  mongoose.connect(uri, {
     serverApi: {
       version: ServerApiVersion.v1,
       strict: true,
       deprecationErrors: true,
     }
   });
+  console.log("Connected to MongoDB!");
+
+    // Визначаємо модель даних користувача
+  class UserTest {
+    @prop({ required: true })
+    name!: string;
+
+    @prop({ required: true, unique: true })
+    email!: string;
+
+    @prop({ required: true })
+    password!: string;
+  }
+
+  // Створюємо модель з класу користувача
+  const UserModel = getModelForClass(UserTest);
 
   try {
-    // Connect the client to the server	(optional starting in v4.7)
-    await client.connect();
-    console.log("Connected to MongoDB!");
-
-    // Отримуємо доступ до колекції "users" у базі даних
-    const db = client.db("talk-hub-DB"); // Замініть "your_database_name" на назву вашої бази даних
-    const usersCollection = db.collection("user");
-
-    // Створюємо одного користувача у колекції "users"
-    const newUser = { name: "John Doe", email: "john@example.com" };
-    const insertResult = await usersCollection.insertOne(newUser);
-    console.log("Inserted new user:", insertResult.insertedId);
+    // Приклад додавання користувача до бази даних
+    const newUser = await UserModel.create({
+      name: 'John Doe',
+      email: 'john@example.com',
+      password: 'password123',
+    });
+    console.log('Created user:', newUser);
 
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
   } finally {
-    // Ensures that the client will close when you finish/error
-    await client.close();
+    mongoose.disconnect()
+      .then(() => {
+        console.log('Disconnected from MongoDB');
+      })
+      .catch(error => {
+        console.error('Error disconnecting from MongoDB:', error);
+      });
   }
 }
 
