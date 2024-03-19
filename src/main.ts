@@ -1,11 +1,14 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
+import { getModelForClass, mongoose, prop } from '@typegoose/typegoose';
+import { ServerApiVersion } from 'mongodb';
 
 async function bootstrap() {
-  const port = process.env.PORT || 3000;
+  const port = 3000;
 
   const app = await NestFactory.create(AppModule);
-  await app.listen(port, () => console.log(`Server started on port ${port}!`));
+  await app.listen(port);
+  console.log(`Application is running on port: ${port}`);
 }
 
 bootstrap();

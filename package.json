@@ -1,11 +1,11 @@
 {
-  "name": "nest-helloworld",
+  "name": "talk-hub",
   "version": "0.0.1",
   "description": "",
   "author": "",
   "private": true,
   "license": "UNLICENSED",
-  "main":"dist/main.js",
+  "main": "dist/main.js",
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "nest build",
@@ -22,10 +22,14 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
-    "@nestjs/common": "^7.6.15",
-    "@nestjs/core": "^7.6.15",
-    "@nestjs/platform-express": "^7.6.15",
-    "nanoid": "^3.1.22",
+    "@nestjs/common": "^7.0.0",
+    "@nestjs/core": "^7.0.0",
+    "@nestjs/platform-express": "^7.0.0",
+    "@nestjs/platform-socket.io": "^7.6.15",
+    "@nestjs/websockets": "^7.6.15",
+    "@typegoose/typegoose": "^12.2.0",
+    "mongodb": "^6.5.0",
+    "mongoose": "^8.2.1",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^6.6.6"
