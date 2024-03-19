@@ -1,5 +1,5 @@
 {
-  "name": "nest-helloworld",
+  "name": "talk-hub",
   "version": "0.0.1",
   "description": "",
   "author": "",
@@ -22,21 +22,17 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
-    "@nestjs/common": "^7.6.15",
-    "@nestjs/core": "^7.6.15",
-    "@nestjs/platform-express": "^7.6.15",
-    "@nestjs/platform-socket.io": "^10.3.3",
-    "@nestjs/websockets": "^10.3.3",
+    "@nestjs/common": "^7.0.0",
+    "@nestjs/core": "^7.0.0",
+    "@nestjs/platform-express": "^7.0.0",
+    "@nestjs/platform-socket.io": "^7.6.15",
+    "@nestjs/websockets": "^7.6.15",
     "@typegoose/typegoose": "^12.2.0",
-    "ip": "^2.0.1",
     "mongodb": "^6.5.0",
     "mongoose": "^8.2.1",
-    "my-ip": "^1.1.1",
-    "nanoid": "^3.1.22",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
-    "rxjs": "^6.6.6",
-    "socket.io": "^4.7.4"
+    "rxjs": "^6.6.6"
   },
   "devDependencies": {
     "@nestjs/cli": "^7.6.0",
