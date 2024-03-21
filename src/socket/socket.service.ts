@@ -1,26 +1,20 @@
-import { WebSocketServer, ConnectedSocket, OnGatewayConnection, SubscribeMessage, WebSocketGateway } from '@nestjs/websockets';
-import { Server, Socket } from 'socket.io';
+import { WebSocketServer, SubscribeMessage, WebSocketGateway, MessageBody, ConnectedSocket } from '@nestjs/websockets';
+import { Server, Socket} from 'socket.io';
 
 @WebSocketGateway({
   cors: {
-    origin: '*'
+    origin: '*',
   },
+  transports: ['websocket']
 })
 
-export class SocketService implements OnGatewayConnection {
-  @WebSocketServer() server: Server
-  
-  @SubscribeMessage('server-path')
-  handleEvent(dto: any, @ConnectedSocket() client: Socket): void {
-    console.log(dto);
-    const res = {type: 'someType', dto};
-    client.emit("client-path", res);
-  }
+export class SocketService {
+  @WebSocketServer() server: Server;
 
-  handleConnection(client: any): void {
+  @SubscribeMessage('message')
+  handleEvent(@MessageBody() data: object, @ConnectedSocket() client: Socket): void {
+    console.log(data);
     console.log(client);
-    console.log("CONNECTED");
-    console.log(`Client connected: ${client.id}`);
+    this.server.emit('message', data);
   }
-
 }
