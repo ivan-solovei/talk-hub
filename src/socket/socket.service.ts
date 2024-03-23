@@ -8,8 +8,13 @@ import { Server, Socket} from 'socket.io';
   transports: ['websocket']
 })
 
-export class SocketService {
+export class SocketService implements OnGatewayConnection {
   @WebSocketServer() server: Server;
+
+  handleConnection(client: Socket) {
+    const clientId = client.id;
+    client.emit('sid', clientId)
+  }
 
   @SubscribeMessage('message')
   handleEvent(@MessageBody() data: any, @ConnectedSocket() client: Socket): void {
