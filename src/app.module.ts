@@ -5,9 +5,10 @@ import { AppService } from './app.service';
 import { SocketModule } from './socket/socket.module';
 import { MessagesModule } from './messages/messages.module';
 import { UsersModule } from './users/users.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
-  imports: [SocketModule, MessagesModule, UsersModule],
+  imports: [SocketModule, MessagesModule, UsersModule, AuthModule],
   controllers: [AppController],
   providers: [AppService],
 })
