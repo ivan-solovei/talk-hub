@@ -1,5 +1,7 @@
 export class CreateMessageDto {
   readonly text: string;
   readonly sender: string;
+  readonly receiver: string;
   readonly timestamp: string;
-}//add id + receiver + chatId
+  readonly chatId: string;
+}
