@@ -18,4 +18,9 @@ export class MessagesService {
     async findAll(): Promise<Message[]> {
         return this.messageModel.find().exec();
     }
+
+    async findAllMessages(id): Promise<any> {
+        const findAll = await this.messageModel.find({ chatId: { $all: [id] } }).exec();
+        return findAll;
+    }
 }
