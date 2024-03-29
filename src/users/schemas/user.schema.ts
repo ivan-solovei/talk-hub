@@ -22,6 +22,9 @@ export class User {
   
   @Prop()
   password: string;
+  
+  @Prop()
+  chatIds: string[];
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

@@ -22,8 +22,9 @@ export class ChatController {
       return this.chatService.findAll();
     }
 
-    @Get(':id')
-    async getAllChatsByUserId(@Param('id') id: string): Promise<any> {
-      return await this.chatService.findAllChats(id);
+    @Get(':ids')
+    async findAllChats(@Param('ids') ids: string): Promise<any> {
+      const idsArray = ids.split(',');
+      return this.chatService.findAllChats(idsArray);
     }
 }

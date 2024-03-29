@@ -11,15 +11,15 @@ export class AuthService {
 
   async signIn(
     userName: string,
-    pass: string,
+    password: string,
   ): Promise<{ userId: string, access_token: string }> {
-    const user = await this.usersService.findOne(userName);
-    if (user?.password !== pass) {
-      throw new UnauthorizedException();
+    const user: any = await this.usersService.findOne(userName);
+    if (user?.password !== password) {
+      throw new HttpException('Wrong password', HttpStatus.BAD_REQUEST);
     }
     const payload = { sub: user.userId, userName: user.userName };
     return {
-      userId: user.userId,
+      userId: user._id.toString(),
       access_token: await this.jwtService.signAsync(payload),
     };
   }
@@ -28,7 +28,7 @@ export class AuthService {
     userName: string,
     email: string,
     password: string,
-  ): Promise<{ access_token: string }> {    
+  ): Promise<{ user, access_token: string }> {    
     const userNickName = await this.usersService.findOne(userName);
     if(!!userNickName) {
       throw new HttpException('User already exist', HttpStatus.BAD_REQUEST);
@@ -41,6 +41,7 @@ export class AuthService {
 
     const payload = { sub: user.userId, userName: user.userName };
     return {
+      user,
       access_token: await this.jwtService.signAsync(payload),
     };
   }

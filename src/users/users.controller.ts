@@ -20,9 +20,14 @@ export class UsersController {
     return this.usersService.findAll();
   }
 
+  @Get(':name')
+  async findOne(@Param('id') name: string): Promise<User> {
+    return this.usersService.findOne(name);
+  }
+
   @Get(':id')
-  async findOne(@Param('id') id: string): Promise<User> {
-    return this.usersService.findOne(id);
+  async findOneById(@Param('id') id: string): Promise<User> {
+    return this.usersService.findUserById(id);
   }
 
   @Put(':id')

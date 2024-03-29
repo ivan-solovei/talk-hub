@@ -24,7 +24,7 @@ export class SocketService implements OnGatewayConnection {
       'message', 
       {
         text: data.text,
-        sender: client.id,
+        sender: data.sender,
         timestamp: data.timestamp
       }
     );

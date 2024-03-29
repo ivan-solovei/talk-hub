@@ -1,7 +1,8 @@
 import * as mongoose from 'mongoose';
 
 export const ChatSchema = new mongoose.Schema({
-  messages: { type: Array, required: true },
-  members: { type: Array, required: true },
+  icon: { type: String, required: true },
+  name: { type: String, required: true },
+  title: { type: String, required: true },
   createdAt: { type: String, default: Date.now },
 });

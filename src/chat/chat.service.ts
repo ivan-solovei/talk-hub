@@ -19,10 +19,10 @@ export class ChatService {
         return this.chatModel.find().exec();
     }
 
-    async findAllChats(id: string) {
-        const foundedChat = await this.chatModel
-        .findById({_id: id})
-        .exec()
-        return foundedChat
-    }
+    async findAllChats(ids: string[]): Promise<Chat[]> {
+        const foundedChats = await this.chatModel
+          .find({ _id: { $in: ids } })
+          .exec();
+        return foundedChats;
+      }
 }

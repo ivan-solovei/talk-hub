@@ -1,5 +1,6 @@
 export class CreateChatDto {
-  readonly messages: [];
-  readonly members: [];
+  readonly icon: string;
+  readonly name: string;
+  readonly title: string;
   readonly createdAt: string;
 }
