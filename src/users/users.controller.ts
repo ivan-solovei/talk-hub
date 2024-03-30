@@ -21,11 +21,11 @@ export class UsersController {
   }
 
   @Get(':name')
-  async findOne(@Param('id') name: string): Promise<User> {
+  async findOne(@Param('name') name: string): Promise<User> {
     return this.usersService.findOne(name);
   }
 
-  @Get(':id')
+  @Get('id/:id')
   async findOneById(@Param('id') id: string): Promise<User> {
     return this.usersService.findUserById(id);
   }

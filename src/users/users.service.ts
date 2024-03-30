@@ -26,7 +26,7 @@ export class UsersService {
       }
 
     async findUserById(id: string): Promise<User> {
-        return this.userModel.findOne({ _id: id });
+        return this.userModel.findById({ _id: id });
       }
 
     async update(id: string, updateUserDto: UpdateUserDto): Promise<User> {;
