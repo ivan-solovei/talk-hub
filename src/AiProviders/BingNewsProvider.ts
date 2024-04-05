@@ -1,24 +1,26 @@
 import { Injectable } from '@nestjs/common';
-import { ITransport } from '../transport/interfaces/transport.interfaces'
-import { INewSource } from './interfaces'
 import { News } from './News'
 import { TransportController } from '../transport/transport.controller'
 
 @Injectable()
-export class BingNewsProvider implements INewSource {
-    private url = ''
-    private params = ''
-    transport: ITransport
+export class BingNewsProvider {
+    private url = 'https://api.bing.microsoft.com/v7.0/custom/search?'
+    private subscriptionKey = 'dee8bd1fe4b24d18a2d980251ff1bfce';
+    private customConfigId = '55f71e3d-69b7-4f04-89a2-f56543034ba2';
     constructor(
-        transport: ITransport,
-        readonly transportController: TransportController
-    ) {
-      this.transport = transport
-    }
+        private readonly transportController: TransportController
+    ) {}
 
     public async getNewsByTopic(topic: string): Promise<News> {
-        // TransportController.
-        return await this.transportController.getResponse(this.url, this.params);
-       
+        const info = {
+            url: this.url + 
+            'q=' + topic + "&" +
+            'customconfig=' + this.customConfigId + "&" +
+            'mkt=en-US',
+            headers: {
+                'Ocp-Apim-Subscription-Key' : this.subscriptionKey
+            }
+        }
+        return await this.transportController.getResponse(info.url, info.headers);
     }
   }
