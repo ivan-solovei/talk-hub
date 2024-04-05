@@ -5,4 +5,6 @@ export interface Chat extends Document {
   readonly name: string;
   readonly title: string;
   readonly createdAt: string;
+  type: [] // moderatedChat/freeChat
+  moderators: []//Ai ids
 }

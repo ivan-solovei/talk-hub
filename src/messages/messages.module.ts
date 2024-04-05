@@ -5,6 +5,7 @@ import { messagesProviders } from './messages.providers';
 import { DatabaseModule } from '../database/database.module';
 import { APP_GUARD } from '@nestjs/core';
 import { AuthGuard } from '../auth/auth.guard';
+import { NewsProvider } from '../NewsProvider'
 
 @Module({
   imports: [DatabaseModule],
@@ -12,6 +13,7 @@ import { AuthGuard } from '../auth/auth.guard';
   providers: [
     MessagesService,
     ...messagesProviders,
+    NewsProvider,
     {
       provide: APP_GUARD,
       useClass: AuthGuard,

@@ -21,4 +21,11 @@ export class MessagesController {
   async getAllMessagesByChatId(@Param('id') id: string)  {
     return this.messagesService.findAllMessages(id);
   }
+
+  @Get('theme/:theme')
+  async getNewsByTheme(@Param('theme') theme: string)  {
+    console.log(theme);
+    
+    return this.messagesService.findNewsByTheme(theme);
+  }
 }
