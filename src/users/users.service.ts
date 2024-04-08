@@ -1,43 +1,71 @@
 import { Model } from "mongoose";
-import { Injectable, Inject } from "@nestjs/common";
+import { Injectable, Inject, Logger } from "@nestjs/common";
 import { User } from './schemas/user.schema';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 
 @Injectable()
 export class UsersService {
+  private readonly logger = new Logger(UsersService.name);
     constructor(
       @Inject('USER_MODEL') 
       private readonly userModel: Model<User>
     ) {}
 
-
     async create(createUserDto: CreateUserDto): Promise<User> {
-        const createdUser = new this.userModel(createUserDto);
-        return createdUser.save();
+      try {
+        return new this.userModel(createUserDto)
+          .save()
+      } catch (error) {
+        this.logger.log('Unable to create new User', error)
+      }
     }
 
     async findAll(): Promise<User[]> {
-        return this.userModel.find().exec();
+      try {
+        return this.userModel
+          .find()
+          .exec()
+      } catch (error) {
+        this.logger.log('Unable to find all Users', error)
+      }
     }
 
     async findOne(name: string): Promise<User> {
-        return this.userModel.findOne({ userName: name });
+      try {
+        return this.userModel
+          .findOne({ userName: name })
+      } catch (error) {
+        this.logger.log(`Unable to find User by Name: ${name}`, error)
       }
+    }
 
     async findUserById(id: string): Promise<User> {
-        return this.userModel.findById({ _id: id });
+      try {
+        return this.userModel
+          .findById(id)
+          .exec()
+      } catch (error) {
+        this.logger.log(`Unable to find User by Id: ${id}`, error)
       }
+    }
 
     async update(id: string, updateUserDto: UpdateUserDto): Promise<User> {;
-        const updatedUser = await this.userModel.findByIdAndUpdate(id, updateUserDto, { new: true });
-        return updatedUser;
+        try {
+          return await this.userModel
+            .findByIdAndUpdate(id, updateUserDto, { new: true })
+        } catch (error) {
+          this.logger.log(`Unable to update User`, error)          
+        }
     }
 
     async delete(id: string): Promise<User> {
-        const deletedUser = await this.userModel
-        .findByIdAndDelete({ _id: id })
-        .exec();
-      return deletedUser;
+      try {
+        return await this.userModel
+          .findByIdAndDelete(id)
+          .exec();
+      } catch (error) {
+        this.logger.log(`Unable to delete User`, error)          
+      }
     }
 }

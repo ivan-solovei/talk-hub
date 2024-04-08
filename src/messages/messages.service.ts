@@ -1,12 +1,12 @@
 import { Model } from "mongoose";
-import { Injectable, Inject, Optional } from "@nestjs/common";
+import { Injectable, Inject, Optional, Logger } from "@nestjs/common";
 import { Message } from './interfaces/message.interface';
 import { CreateMessageDto } from './dto/create-message.dto';
 import { NewsProvider } from '../NewsProvider';
-import axios from "axios";
 
 @Injectable()
 export class MessagesService {
+  private readonly logger = new Logger(MessagesService.name);
     constructor(
         private readonly newsProvider: NewsProvider,
         @Inject('MESSAGE_MODEL')
@@ -14,20 +14,39 @@ export class MessagesService {
     ) {}
 
     async create(createMessageDto: CreateMessageDto): Promise<Message> {
-        const createdMessage = new this.messageModel(createMessageDto);
-        return createdMessage.save();
+      try {
+        return new this.messageModel(createMessageDto)
+          .save()
+      } catch (error) {
+        this.logger.log('Unable to create message', error)
+      }
     }
 
     async findAll(): Promise<Message[]> {
-        return this.messageModel.find().exec();
+      try {
+        return this.messageModel
+          .find()
+          .exec()
+      } catch (error) {
+        this.logger.log('Unable to find all messages', error)
+      }
     }
 
-    async findAllMessages(id): Promise<any> {
-        const findAll = await this.messageModel.find({ chatId: { $all: [id] } }).exec();
-        return findAll;
+    async findAllMessages(id: string): Promise<any> {
+      try {
+        return await this.messageModel
+          .find({ chatId: { $all: [id] } })
+          .exec()
+      } catch (error) {
+        this.logger.log('Unable to find all messages by ChatId', error)
+      }
     }
 
-    async findNewsByTheme(theme): Promise<any> {
-        return await this.newsProvider.detectAiProvider(theme);
+    async findNewsByTheme(theme: string): Promise<any> {
+      try {
+        return await this.newsProvider.detectAiProvider(theme)
+      } catch (error) {
+        this.logger.log(`Unable to find all news by theme: ${theme}`, error)
+      }
     }
 }
