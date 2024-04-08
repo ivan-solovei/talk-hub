@@ -1,13 +1,15 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
+import { Logger } from '@nestjs/common';
 
 async function bootstrap() {
+  const logger = new Logger();
   const port = process.env.PROD_PORT || process.env.LOCAL_PORT;
 
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, {logger: console,});
   app.enableCors();
   await app.listen(port);
-  console.log(`Application is running on port: ${port}`);
+  logger.log(`Application is running on port: ${port}`);
 }
 
 bootstrap();

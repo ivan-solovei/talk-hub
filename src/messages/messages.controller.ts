@@ -24,8 +24,6 @@ export class MessagesController {
 
   @Get('theme/:theme')
   async getNewsByTheme(@Param('theme') theme: string)  {
-    console.log(theme);
-    
     return this.messagesService.findNewsByTheme(theme);
   }
 }
