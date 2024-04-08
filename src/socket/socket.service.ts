@@ -1,5 +1,6 @@
 import { WebSocketServer, SubscribeMessage, WebSocketGateway, MessageBody, ConnectedSocket, OnGatewayConnection } from '@nestjs/websockets';
 import { Server, Socket} from 'socket.io';
+import { Logger, Injectable } from '@nestjs/common';
 
 @WebSocketGateway({
   cors: {
@@ -8,7 +9,9 @@ import { Server, Socket} from 'socket.io';
   transports: ['websocket']
 })
 
+@Injectable()
 export class SocketService implements OnGatewayConnection {
+  private readonly logger = new Logger(SocketService.name);
   @WebSocketServer() server: Server;
 
   handleConnection(client: Socket) {
@@ -18,8 +21,7 @@ export class SocketService implements OnGatewayConnection {
 
   @SubscribeMessage('message')
   handleEvent(@MessageBody() data: any, @ConnectedSocket() client: Socket): void {
-    console.log(data);
-    console.log(client.id);
+    this.logger.log(data);
     this.server.emit(
       'message', 
       {
