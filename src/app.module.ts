@@ -1,4 +1,5 @@
 import { Module, NestModule, MiddlewareConsumer, RequestMethod } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
 import { logger } from "./common/middleware/logger.middleware";
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -10,7 +11,7 @@ import { ChatModule } from './chat/chat.module';
 import { TransportModule } from './transport/transport.module';
 
 @Module({
-  imports: [SocketModule, MessagesModule, UsersModule, AuthModule, ChatModule, TransportModule],
+  imports: [SocketModule, MessagesModule, UsersModule, AuthModule, ChatModule, TransportModule, ConfigModule.forRoot({isGlobal: true})],
   controllers: [AppController],
   providers: [AppService],
 })
