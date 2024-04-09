@@ -1,6 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { News } from './News'
-import { TransportController } from '../transport/transport.controller'
+import { TransportService } from '../transport/transport.service'
 
 @Injectable()
 export class BingNewsProvider {
@@ -10,21 +10,25 @@ export class BingNewsProvider {
     private customConfigId = process.env.BING_CUSTOM_CONFIG;
 
     constructor(
-        private readonly transportController: TransportController
+        private readonly transportService: TransportService
     ) {}
+
+    private generateUrl(topic: string, url: string, customConfigId: string) {
+      return url + 
+        'q=' + topic + "&" +
+        'customconfig=' + customConfigId + "&" +
+        'mkt=en-US'
+    }
 
     public async getNewsByTopic(topic: string): Promise<News> {
       const info = {
-        url: this.url + 
-        'q=' + topic + "&" +
-        'customconfig=' + this.customConfigId + "&" +
-        'mkt=en-US',
+        url: this.generateUrl(topic, this.url, this.customConfigId),
         headers: {
             'Ocp-Apim-Subscription-Key' : this.subscriptionKey
         }
       }
       try {
-        return await this.transportController.getResponse(info.url, info.headers);
+        return await this.transportService.call(info.url, info.headers);
       } catch (error) {
         this.logger.log(`Ooops, can't find news by: ${topic}`)
       }

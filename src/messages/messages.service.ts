@@ -1,5 +1,5 @@
 import { Model } from "mongoose";
-import { Injectable, Inject, Optional, Logger } from "@nestjs/common";
+import { Injectable, Inject, Logger, HttpException, HttpStatus } from "@nestjs/common";
 import { Message } from './interfaces/message.interface';
 import { CreateMessageDto } from './dto/create-message.dto';
 import { NewsProvider } from '../NewsProvider';
@@ -43,6 +43,10 @@ export class MessagesService {
     }
 
     async findNewsByTheme(theme: string): Promise<any> {
+      if(!theme) {
+          this.logger.log(`Can't find theme, cause it ${theme}`)
+          throw new HttpException(`Can't find theme, cause it ${theme}`, HttpStatus.BAD_REQUEST);
+      }
       try {
         return await this.newsProvider.detectAiProvider(theme)
       } catch (error) {
